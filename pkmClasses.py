@@ -3,25 +3,8 @@
 # Pokémon and Pokédex class
 
 import typeDict
-import random
+import random, moves, pokedex
 
-            # : ["",   [, , , , , ],   "",     "",     ,   ]
-pokedex = { # EntryNum:int : ["name", [hp, atk, df, spatk, spdf, spd], ["type1", "type2"], evoLVL, evolutionEntry]
-            1 : ["Bulbasaur",   [45, 49, 49, 65, 65, 45],   ["grass",    "poison"],     [],   16,     2],
-            2 : ["Ivysaur",     [60, 62, 63, 80, 80, 60],   ["grass",    "poison"],     [],   32,     3],
-            3 : ["Venosaur",    [80, 82, 83, 100, 100, 80], ["grass",    "poison"],     [],   None,   None],
-            4 : ["Charmander",  [39, 52, 43, 60, 50, 65],   ["fire",     "none"],       [],   16,     5],
-            5 : ["Charmeleon",  [58, 64, 58, 80, 65, 80],   ["fire",     "none"],       [],   36,     6],
-            6 : ["Charizard",   [78, 84, 78, 109, 85, 100], ["fire",     "flying"],     [],   None,   None],
-            7 : ["Squirtle",    [44, 48, 65, 50, 64, 43],   ["water",    "none"],       [],   16,     8],
-            8 : ["Wartortle",   [59, 63, 80, 65, 80, 58],   ["water",    "none"],       [],   36,     9],
-            9 : ["Blastoise",   [79, 83, 100, 85, 105, 78], ["water",    "none"],       [],   None,   None]
-            
-            }
-
-moves   = { #"Move Name"     : [power, accuracy, maxPP, dmgType, moveType, contact, hitsAdjacentFoes[0, 1, or 2]],
-            "Razor leaf"    : [55, 95, 25, "grass", False, 2]
-    }
 
 # ================================================================================================================
 
@@ -34,7 +17,7 @@ class Pokemon:
         self.hp         = hp
         self.lvl        = level
         self.status     = status
-        self.moves      = [[None, None, None], [None, None, None], [None, None, None], [None, None, None]]
+        self.moves      = [[None, None, None], [None, None, None], [None, None, None], [None, None, None]] # [MoveName, PP, MaxPP]
         self.wild       = True
         self.exp        = 0
         
@@ -62,16 +45,29 @@ class Pokemon:
     def add_exp(self):
         return self.exp
     
-    
     def attack(self, moveName, target:pokemon):
-        moveInfo = moves[moveName]
+        # Varaibles
+        moveInfo = moves.moves[moveName]
         power = moveInfo[0]
         accuracy = moveInfo[1]
         dmgType = moveInfo[2]
         moveType = moveInfo[3]
+        B = 0
+        randVal = random.range(0.85, 1, 0.01)
+        
+        if dmgType == "physical":
+            
+        elif dmgType== "special":
+        
+        else:
+            target.apply_status()
+            return
+        a, d = 
+        
+        
+        
         if moveInfo[3] == self._info[3][0] or moveInfo[3] == self._info[3][1]:
             modifier = 1.5
-        
         
         if dmgType == "physical":
             
@@ -83,7 +79,7 @@ class Pokemon:
     def take_damage(self, dmg):
         self.hp -= dmg
     
-    def apply_status(self, status):
+    def apply_status(self, status, accuracy):
         self.status = status
         
     def set_move(self, moveName, movePos):
@@ -93,6 +89,9 @@ class Pokemon:
     def capture(self):
         self.wild = False
         
+    def heal(self):
+        self.hp = self._maxHp
+        self.status = None
         
         
         
@@ -100,7 +99,7 @@ class Pokemon:
 
 if __name__ == "__main__":
     # pkmn = pokedex(1, "bulBasAur", [45, 49, 49, 65, 65, 45], "grass", "poison", 16, 2)
-    newEntity = Pokemon(pokedex[1], 300, 300, 42)
+    newEntity = Pokemon(pokedex.pokedex[1], 300, 300, 42)
     
     
     
