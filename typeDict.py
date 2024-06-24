@@ -384,10 +384,11 @@ def getModifer(atk, df:list):
     return dmg
 
 
-print(getModifer(["noRmaL", "ghost"]))
+#print(getModifer("normal", ["noRmaL", "ghost"]))
 
+myList = [1, 3, 6, 9]
 
-
+print(typeChart["normal"])
 
 
 

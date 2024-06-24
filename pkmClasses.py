@@ -9,11 +9,13 @@ import random, moves, pokedex
 # ================================================================================================================
 
 
-class Pokemon: 
-    def __init__(self, pokedexInfo:list, mHp:int, hp:int, level:int, status:str=None):
-        self._info      = pokedexInfo
+class Pokemon:
+    
+    def __init__(self, entry:int, mHp:int, hp:int, level:int, status:str=None):
+        self._dexNum    = entry
         self._maxHp     = mHp
         self._ability   = random.rand(int)
+        self._stats     = pokedex[entry][2]
         self.hp         = hp
         self.lvl        = level
         self.status     = status
@@ -98,8 +100,8 @@ class Pokemon:
     
 
 if __name__ == "__main__":
-    # pkmn = pokedex(1, "bulBasAur", [45, 49, 49, 65, 65, 45], "grass", "poison", 16, 2)
-    newEntity = Pokemon(pokedex.pokedex[1], 300, 300, 42)
+    newEntity = Pokemon(1, 300, 300, 42)
+    
     
     
     
@@ -107,7 +109,7 @@ if __name__ == "__main__":
 
         
         
-        
+
 # HP = floor(0.01 x (2 x Base + IV + floor(0.25 x EV)) x Level) + Level + 10
 # Other Stats = (floor(0.01 x (2 x Base + IV + floor(0.25 x EV)) x Level) + 5) x Nature.
 
