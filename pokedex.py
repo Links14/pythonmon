@@ -3,8 +3,11 @@
 # Pokémon type chart with a function to get the damage modifier
 
             # : ["",   [, , , , , ],   "",     "",     ,   ]
-pokedex = { # EntryNum:int : ["name", [hp, atk, df, spatk, spdf, spd], ["type1", "type2"], evoLVL, evolutionEntry]
-            1 : ["Bulbasaur",   [45, 49, 49, 65, 65, 45],   ["grass",    "poison"],     [],   16,     2],
+pokedex = { # EntryNum:int : ["name", [hp, atk, df, spatk, spdf, spd], ["type1", "type2"], [[moves], [correspondinglevel]], evoLVL, evolutionEntry]
+            1 : ["Bulbasaur",   [45, 49, 49, 65, 65, 45],   ["grass",    "poison"],     [
+                                                                                            ["growl", "tackle", "vine whip", "growth", "leech seed", "razor leaf"],
+                                                                                            [1, 1, 3, 6, 9, 12]
+                                                                                        ],   16,     2],
             2 : ["Ivysaur",     [60, 62, 63, 80, 80, 60],   ["grass",    "poison"],     [],   32,     3],
             3 : ["Venosaur",    [80, 82, 83, 100, 100, 80], ["grass",    "poison"],     [],   None,   None],
             4 : ["Charmander",  [39, 52, 43, 60, 50, 65],   ["fire",     "none"],       [],   16,     5],

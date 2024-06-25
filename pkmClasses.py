@@ -2,8 +2,12 @@
 # 6-23-24
 # Pokémon and Pokédex class
 
-import typeDict
-import random, moves, pokedex
+from math import floor
+
+from pokedex import pokedex
+from typeDict import typeChart, getModifer
+from moves import moves
+import random
 
 
 # ================================================================================================================
@@ -16,6 +20,7 @@ class Pokemon:
         self._maxHp     = mHp
         self._ability   = random.rand(int)
         self._stats     = pokedex[entry][2]
+        self._IVs       = [random.randint(0, 31), random.randint(0, 31), random.randint(0, 31), random.randint(0, 31), random.randint(0, 31), random.randint(0, 31)]
         self.hp         = hp
         self.lvl        = level
         self.status     = status
@@ -27,56 +32,37 @@ class Pokemon:
         return self._name
         
     def get_hp(self):
-        return self._stats[0]
+        return self._stats[0] + self._IVs[0]
     
     def get_atk(self):
-        return self._stats[1]
+        return self._stats[1] + self._IVs[1]
     
     def get_spatk(self):
-        return self._stats[2]
+        return self._stats[2] + self._IVs[2]
     
     def get_def(self):
-        return self._stats[3]
+        return self._stats[3] + self._IVs[3]
     
     def get_spdef(self):
-        return self._stats[4]
+        return self._stats[4] + self._IVs[4]
     
     def get_spd(self):
-        return self._stats[5]
+        return self._stats[5] + self._IVs[5]
     
-    def add_exp(self):
-        return self.exp
+    def add_exp(self, x):
+        self.exp += x
+        
+    def get_level(self):
+        return self.lvl
     
-    def attack(self, moveName, target:pokemon):
-        # Varaibles
-        moveInfo = moves.moves[moveName]
-        power = moveInfo[0]
-        accuracy = moveInfo[1]
-        dmgType = moveInfo[2]
-        moveType = moveInfo[3]
-        B = 0
-        randVal = random.range(0.85, 1, 0.01)
-        
-        if dmgType == "physical":
-            
-        elif dmgType== "special":
-        
-        else:
-            target.apply_status()
-            return
-        a, d = 
-        
-        
-        
-        if moveInfo[3] == self._info[3][0] or moveInfo[3] == self._info[3][1]:
-            modifier = 1.5
-        
-        if dmgType == "physical":
-            
-        elif dmgType== "special":
-        
-            
-        target.take_damage()
+    def get_move(self, slot):
+        return self.moves[slot]
+    
+    def get_typings(self):
+        return pokedex[self._dexNum][2]
+    
+    def set_move_pp(self, slot, pp):
+        self.moves[slot][1] = pp
     
     def take_damage(self, dmg):
         self.hp -= dmg
@@ -94,25 +80,21 @@ class Pokemon:
     def heal(self):
         self.hp = self._maxHp
         self.status = None
-        
-        
-        
-    
 
-if __name__ == "__main__":
-    newEntity = Pokemon(1, 300, 300, 42)
-    
-    
-    
-    
-    print(typeDict.getModifer("", ""))
 
-        
-        
-
-# HP = floor(0.01 x (2 x Base + IV + floor(0.25 x EV)) x Level) + Level + 10
-# Other Stats = (floor(0.01 x (2 x Base + IV + floor(0.25 x EV)) x Level) + 5) x Nature.
-
+def set_moves(entry, lvl):
+    moveLvls = pokedex[entry][3][1]
+    moveSet  = pokedex[entry][3][0]
+    index = None
+    for i in range(lvl, 0, -1):
+        if i in moveLvls:
+            index = len(moveLvls) - moveLvls[::-1].index(i)
+            break
+    if index == None:
+        return []
+    if index < 4:
+        return moveSet[:index]
+    return moveSet[index-4: index]
 
 
 
