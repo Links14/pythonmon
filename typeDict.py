@@ -366,13 +366,16 @@ typeChart = {
                     }
             }
 
-def getModifer(atk, df:list):
+def getModifier(atk, df:list):
     atk = atk.lower()
     df1 = df[0].lower()
-    df2 = df[1].lower()
     dmg1 = typeChart[atk][df1]
-    dmg2 = typeChart[atk][df2]
-    dmg = dmg1 * dmg2
+    try:
+        df2 = df[1].lower()
+        dmg2 = typeChart[atk][df2]
+        dmg = dmg1 * dmg2
+    except:
+        dmg = dmg1
     
     if dmg == 0:
         print("does not effect the enemy pokemon")
