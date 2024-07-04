@@ -16,7 +16,7 @@ import pypokedex as pydex
 
 class Pokemon:
     
-    def __init__(self, entry:int, hp:int, level:int, status:str=None):
+    def __init__(self, entry:int, level:int, status:str=None):
         self._pkmn      = pydex.get(dex=entry)
         self._dexNum    = entry
         self._name      = self._pkmn.name
@@ -25,7 +25,7 @@ class Pokemon:
         self._IVs       = [random.randint(0, 31), random.randint(0, 31), random.randint(0, 31), random.randint(0, 31), random.randint(0, 31), random.randint(0, 31)]
         self.lvl        = level
         self.status     = status
-        self.maxHp      = self.update_maxHp()
+        self.maxHp      = floor(0.01 * (2 * self._pkmn.base_stats.hp + self._IVs[0] + floor(0.25 * 1)) * self.lvl) + self.lvl + 10
         self.hp         = self.maxHp
         # HP = floor(0.01 x (2 x Base + IV + floor(0.25 x EV)) x Level) + Level + 10
         #self.moves      = [[None, None, None], [None, None, None], [None, None, None], [None, None, None]] # [MoveName, PP, MaxPP]        
@@ -85,7 +85,7 @@ class Pokemon:
     
 
     def update_maxHp(self):
-        self.maxHp = floor(0.01 * (2 * self.get_hp() + self._IVs[0] + floor(0.25 * 1)) * self.get_level()) + self.get_level() + 10
+        self.maxHp = floor(0.01 * (2 * self._pkmn.base_stats.hp + self._IVs[0] + floor(0.25 * 1)) * self.lvl) + self.lvl + 10
         print(self.maxHp)
 
     def add_exp(self, x):
@@ -102,6 +102,9 @@ class Pokemon:
     
     def apply_status(self, status, accuracy):
         self.status = status
+        
+    def set_hp(self, hp):
+        self.hp = hp
         
     
     

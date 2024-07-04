@@ -20,3 +20,5 @@ moves   = { #"Move Name"    : [power, accuracy, maxPP, dmgType, moveType, status
             "solar-beam"    : [120, 100,    10, "special",  "grass",    None,       False, False]
            
     }
+
+
