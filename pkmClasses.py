@@ -21,11 +21,36 @@ class Pokemon:
         self._dexNum    = entry
         self._name      = self._pkmn.name
         self._ability   = random.randint(0,1)
-        self._stats     = [self._pkmn.base_stats.hp, self._pkmn.base_stats.attack, self._pkmn.base_stats.sp_atk, self._pkmn.base_stats.defense, self._pkmn.base_stats.sp_def, self._pkmn.base_stats.speed]
-        self._IVs       = [random.randint(0, 31), random.randint(0, 31), random.randint(0, 31), random.randint(0, 31), random.randint(0, 31), random.randint(0, 31)]
+        self._stats     = { "HP"    : self._pkmn.base_stats.hp,
+                            "ATK"   : self._pkmn.base_stats.attack,
+                            "S.ATK" : self._pkmn.base_stats.sp_atk,
+                            "DEF"   : self._pkmn.base_stats.defense,
+                            "S.DEF" : self._pkmn.base_stats.sp_def,
+                            "SPD"   : self._pkmn.base_stats.speed
+                            }
+        self._IVs       = { "HP"    : 0,
+                            "ATK"   : 0,
+                            "S.ATK" : 0,
+                            "DEF"   : 0,
+                            "S.DEF" : 0,
+                            "SPD"   : 0
+                            }
+        self._EVs       = { "HP"    : 0,
+                            "ATK"   : 0,
+                            "S.ATK" : 0,
+                            "DEF"   : 0,
+                            "S.DEF" : 0,
+                            "SPD"   : 0
+                            }
+        self._nature    = { "ATK"   : 1,    # This is a modifier value
+                            "S.ATK" : 1,    # The default is 1, but natures should have a single 1.1 value as well as a 0.9 value.
+                            "DEF"   : 1,    # Or there should be no changes
+                            "S.DEF" : 1,    # Boosted stats should be in red text
+                            "SPD"   : 1     # Lowered stats should be in blue text
+                            }
         self.lvl        = level
         self.status     = status
-        self.maxHp      = floor(0.01 * (2 * self._pkmn.base_stats.hp + self._IVs[0] + floor(0.25 * 1)) * self.lvl) + self.lvl + 10
+        self.maxHp      = floor(0.01 * (2 * self._stats["HP"] + self._IVs["HP"] + floor(0.25 * 1)) * self.lvl) + self.lvl + 10
         self.hp         = self.maxHp
         # HP = floor(0.01 x (2 x Base + IV + floor(0.25 x EV)) x Level) + Level + 10
         #self.moves      = [[None, None, None], [None, None, None], [None, None, None], [None, None, None]] # [MoveName, PP, MaxPP]        
@@ -33,7 +58,15 @@ class Pokemon:
         self.wild       = True
         self.exp        = 0
         
-        
+    
+    def stat_calculator(self, stat:str):
+        stat = stat.upper()
+        try:
+            if stat == "HP":
+                return floor(0.01 * (2 * self._stats[stat] + self._IVs[stat] + floor(0.25 * self._EVs[stat])) * self.lvl) + self.lvl + 10
+            return (floor(0.01 * (2 * self._stats[stat] + self._IVs[stat] + floor(0.25 * self._EVs[stat])) * self.lvl) + 5) * self._nature[stat]
+        except:
+            ValueError(f"{stat} is not a valid stat")
         
     def get_name(self):
         return self._name
@@ -45,7 +78,7 @@ class Pokemon:
         return self.maxHp
     
     def get_hp(self):
-        return self._stats[0] + self._IVs[0]
+        return self.stat_calculator("hp")
     
     def get_atk(self):
         return self._stats[1] + self._IVs[1]

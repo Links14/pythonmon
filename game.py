@@ -32,7 +32,7 @@ class Game:
         self.reset_stat_changes(0)
     
     def ai_switch_pokemon(self, newPokemon):
-        self._enemy = newPokemon
+        self._enemy = newPokemon 
         self.reset_stat_changes(1)
     
     def use_move(self, user, target, move_slot:int):
@@ -61,6 +61,9 @@ class Game:
     def on_faint(self, user, target):
         print(f"{target.get_name()} has fainted")
         target.set_hp(0)
+        
+    def get_speed(self, pkmn):
+        return pkmn.get_speed()
 
     #def show_stat_mods(self, player, enemy):
 
